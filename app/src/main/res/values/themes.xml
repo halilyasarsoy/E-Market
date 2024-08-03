@@ -1,0 +1,24 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!-- Base application theme. -->
+    <style name="Base.Theme.EMarketCase" parent="Theme.Material3.DayNight.NoActionBar">
+        <!-- Customize your light theme here. -->
+        <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
+    </style>
+
+    <style name="Theme.EMarketCase" parent="Base.Theme.EMarketCase" />
+
+    <style name="BottomNavigationView.TextHidden" parent="Widget.Design.BottomNavigationView">
+        <item name="itemIconSize">24dp</item>
+        <item name="itemTextAppearanceActive">@style/TextAppearance.BottomNavigationView.IconOnly</item>
+        <item name="itemTextAppearanceInactive">@style/TextAppearance.BottomNavigationView.IconOnly</item>
+    </style>
+
+    <style name="TextAppearance.BottomNavigationView.IconOnly" parent="TextAppearance.AppCompat.Caption">
+        <item name="android:visibility">gone</item>
+    </style>
+
+    <!-- Shadow for the divider line -->
+    <style name="DividerShadow">
+        <item name="android:background">@drawable/shadow</item>
+    </style>
+</resources>
