@@ -15,9 +15,10 @@ class CartAdapter(
 
     inner class CartViewHolder(private val binding: ItemCartBinding) :
         RecyclerView.ViewHolder(binding.root) {
+        @SuppressLint("SetTextI18n")
         fun bind(cartItem: CartItem) {
             binding.productNameTextView.text = cartItem.name
-            binding.productPriceTextView.text = cartItem.price.toString()
+            binding.productPriceTextView.text = "${cartItem.price}$"
             binding.quantityTextView.text = cartItem.quantity.toString()
 
             binding.increaseButton.setOnClickListener {

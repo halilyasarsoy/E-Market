@@ -1,5 +1,6 @@
 package com.halil.e_marketcase.ui.fragment
 
+//noinspection SuspiciousImport
 import android.R
 import android.os.Bundle
 import android.text.Editable
@@ -9,19 +10,20 @@ import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
-import com.halil.e_marketcase.ui.adapter.ProductListAdapter
+import com.halil.e_marketcase.data.CartItem
 import com.halil.e_marketcase.data.Product
 import com.halil.e_marketcase.databinding.FragmentProductListBinding
+import com.halil.e_marketcase.ui.adapter.ProductListAdapter
 import com.halil.e_marketcase.ui.base.BaseFragment
+import com.halil.e_marketcase.ui.viewmodel.CartViewModel
 import com.halil.e_marketcase.ui.viewmodel.ProductListViewModel
 import dagger.hilt.android.AndroidEntryPoint
-import androidx.navigation.fragment.findNavController
-import com.halil.e_marketcase.data.CartItem
-import com.halil.e_marketcase.ui.viewmodel.CartViewModel
 
 @AndroidEntryPoint
-class ProductListFragment : BaseFragment<FragmentProductListBinding>(FragmentProductListBinding::inflate) {
+class ProductListFragment :
+    BaseFragment<FragmentProductListBinding>(FragmentProductListBinding::inflate) {
 
     private lateinit var adapter: ProductListAdapter
     private val viewModel: ProductListViewModel by viewModels()
@@ -51,17 +53,23 @@ class ProductListFragment : BaseFragment<FragmentProductListBinding>(FragmentPro
 
         val filters = listOf("All", "Price < 250", "Price 250-500", "Price > 501")
         val spinnerAdapter = ArrayAdapter(requireContext(), R.layout.simple_spinner_item, filters)
-        spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        spinnerAdapter.setDropDownViewResource(R.layout.simple_spinner_dropdown_item)
         binding.filtersSpinner.adapter = spinnerAdapter
 
-        binding.filtersSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-                val selectedFilter = filters[position]
-                viewModel.setPriceFilter(selectedFilter)
-            }
+        binding.filtersSpinner.onItemSelectedListener =
+            object : AdapterView.OnItemSelectedListener {
+                override fun onItemSelected(
+                    parent: AdapterView<*>?,
+                    view: View?,
+                    position: Int,
+                    id: Long
+                ) {
+                    val selectedFilter = filters[position]
+                    viewModel.setPriceFilter(selectedFilter)
+                }
 
-            override fun onNothingSelected(parent: AdapterView<*>?) {}
-        }
+                override fun onNothingSelected(parent: AdapterView<*>?) {}
+            }
     }
 
     private fun observeViewModel() {
@@ -84,7 +92,8 @@ class ProductListFragment : BaseFragment<FragmentProductListBinding>(FragmentPro
     }
 
     private fun onItemClick(product: Product) {
-        val action = ProductListFragmentDirections.actionProductListFragmentToProductDetailFragment(product)
+        val action =
+            ProductListFragmentDirections.actionProductListFragmentToProductDetailFragment(product)
         findNavController().navigate(action)
     }
 }

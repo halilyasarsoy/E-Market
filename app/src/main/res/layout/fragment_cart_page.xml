@@ -23,7 +23,7 @@
         android:id="@+id/textViewPrice"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Price: "
+        android:text="@string/price"
         android:textColor="@color/main_blue"
         android:textSize="20sp"
         android:layout_marginBottom="10dp"
@@ -31,24 +31,34 @@
         app:layout_constraintBottom_toTopOf="@id/totalPriceTextView"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/cartRecyclerView" />
-
+    <TextView
+        android:id="@+id/emptyCartMessage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="@string/cart_empty"
+        android:textSize="18sp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:visibility="gone"/>
     <TextView
         android:id="@+id/totalPriceTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
-        android:text="123"
         android:textSize="18sp"
         android:layout_marginBottom="20dp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
     <Button
-        android:id="@+id/addToCartDetail"
+        android:id="@+id/complete"
         style="@style/CustomButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Complete"
+        android:text="@string/complete"
         android:layout_marginEnd="20dp"
         app:layout_constraintBottom_toBottomOf="@+id/totalPriceTextView"
         app:layout_constraintEnd_toEndOf="parent"

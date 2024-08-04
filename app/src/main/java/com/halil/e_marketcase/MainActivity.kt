@@ -1,11 +1,13 @@
 package com.halil.e_marketcase
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
+import androidx.activity.addCallback
 import androidx.activity.viewModels
+import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.halil.e_marketcase.ui.viewmodel.CartViewModel
@@ -21,8 +23,21 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        val toolbar: androidx.appcompat.widget.Toolbar = findViewById(R.id.topAppBar)
+        setSupportActionBar(toolbar)
+
+        val navHostFragment =
+            supportFragmentManager.findFragmentById(R.id.containerViewB) as NavHostFragment
+        navController = navHostFragment.navController
+
+        setupActionBarWithNavController(navController)
         initNavigation()
         observeCartItems()
+        handleOnBackPressed()
+    }
+
+    override fun onSupportNavigateUp(): Boolean {
+        return navController.navigateUp() || super.onSupportNavigateUp()
     }
 
     private fun initNavigation() {
@@ -60,10 +75,11 @@ class MainActivity : AppCompatActivity() {
         badge.isVisible = count > 0
         badge.number = count
     }
-
-    override fun onBackPressed() {
-        if (!navController.navigateUp()) {
-            super.onBackPressed()
+    private fun handleOnBackPressed() {
+        onBackPressedDispatcher.addCallback(this) {
+            if (!navController.popBackStack()) {
+                finish()
+            }
         }
     }
 }

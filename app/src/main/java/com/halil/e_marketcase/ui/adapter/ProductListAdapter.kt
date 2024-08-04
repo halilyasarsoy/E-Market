@@ -11,10 +11,8 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.halil.e_marketcase.R
-import com.halil.e_marketcase.data.CartItem
 import com.halil.e_marketcase.data.Product
 import com.halil.e_marketcase.databinding.ItemProductBinding
-import kotlin.reflect.KFunction1
 
 class ProductListAdapter(
     private var products: List<Product>,
@@ -36,9 +34,9 @@ class ProductListAdapter(
                 .into(binding.productImage)
 
             val favIcon = if (product.isFavorite) {
-                R.drawable.baseline_favorite_24 // Favori ise dolu yıldız ikonu
+                R.drawable.baseline_favorite_24
             } else {
-                R.drawable.baseline_favorite_border_24 // Favori değilse boş yıldız ikonu
+                R.drawable.baseline_favorite_border_24
             }
             binding.favButton.setImageResource(favIcon)
 
@@ -89,6 +87,7 @@ class ProductListAdapter(
 
     override fun getItemCount() = products.size
 
+    @SuppressLint("NotifyDataSetChanged")
     fun updateProducts(newProducts: List<Product>) {
         products = newProducts
         notifyDataSetChanged()

@@ -34,9 +34,9 @@ class ProductFavoriteAdapter(
                 .into(binding.productImage)
 
             val favIcon = if (product.isFavorite) {
-                R.drawable.baseline_favorite_24 // Favori ise dolu yıldız ikonu
+                R.drawable.baseline_favorite_24
             } else {
-                R.drawable.baseline_favorite_border_24 // Favori değilse boş yıldız ikonu
+                R.drawable.baseline_favorite_border_24
             }
             binding.favButton.setImageResource(favIcon)
 
@@ -87,6 +87,7 @@ class ProductFavoriteAdapter(
 
     override fun getItemCount() = products.size
 
+    @SuppressLint("NotifyDataSetChanged")
     fun updateProducts(newProducts: List<Product>) {
         products = newProducts
         notifyDataSetChanged()

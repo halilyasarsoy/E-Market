@@ -8,7 +8,7 @@
     <fragment
         android:id="@+id/productListFragment"
         android:name="com.halil.e_marketcase.ui.fragment.ProductListFragment"
-        android:label="fragment_product_list"
+        android:label="Product List"
         tools:layout="@layout/fragment_product_list" >
         <action
             android:id="@+id/action_productListFragment_to_productDetailFragment"
@@ -30,12 +30,12 @@
     <fragment
         android:id="@+id/cartPageFragment"
         android:name="com.halil.e_marketcase.ui.fragment.CartPageFragment"
-        android:label="fragment_cart_page"
+        android:label="Cart"
         tools:layout="@layout/fragment_cart_page" />
     <fragment
         android:id="@+id/favoritePageFragment"
         android:name="com.halil.e_marketcase.ui.fragment.FavoritePageFragment"
-        android:label="FavoritePageFragment" >
+        android:label="Favorite" >
         <action
             android:id="@+id/action_favoritePageFragment_to_productDetailFragment"
             app:destination="@id/productDetailFragment" />

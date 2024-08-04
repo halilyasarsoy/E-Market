@@ -53,5 +53,4 @@ object NetworkModule {
     fun provideCartDao(database: AppDatabase): CartDao {
         return database.cartDao()
     }
-
 }

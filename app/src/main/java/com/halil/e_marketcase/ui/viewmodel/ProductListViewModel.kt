@@ -1,7 +1,6 @@
 package com.halil.e_marketcase.ui.viewmodel
 
 import android.util.Log
-import android.view.View
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -29,29 +28,32 @@ class ProductListViewModel @Inject constructor(
     private var _lastFilterQuery: String? = null
 
     init {
-        loadProductsFromDb() // Database'den ürünleri yükler
+        loadProductsFromDb()
     }
 
     private fun loadProductsFromDb() {
         viewModelScope.launch {
             repository.allProducts.observeForever { products ->
                 if (products.isNullOrEmpty()) {
-                    loadProducts() // Database boşsa API'den ürünleri yükler ve kaydeder
+                    loadProducts()
                     Log.d("ProductListViewModel", "Database is empty, loading products from API")
                 } else {
                     _allProducts.postValue(products)
                     _filteredProducts.postValue(products)
                     updateFavoriteProducts(products)
-                    Log.d("ProductListViewModel", "Loaded products from database: ${products.size} items")
+                    Log.d(
+                        "ProductListViewModel",
+                        "Loaded products from database: ${products.size} items"
+                    )
                 }
             }
         }
     }
 
-    fun loadProducts(apiKey: String = "5fc9346b2af77700165ae514") {
+    private fun loadProducts(apiKey: String = "5fc9346b2af77700165ae514") {
         viewModelScope.launch {
             val products = repository.getProducts(apiKey)
-            repository.insertAllProducts(products) // API'den çekilen ürünleri veritabanına kaydet
+            repository.insertAllProducts(products)
             _allProducts.postValue(products)
             _filteredProducts.postValue(products)
             updateFavoriteProducts(products)
@@ -74,8 +76,9 @@ class ProductListViewModel @Inject constructor(
                 "Price < 250" -> productList.filter { (it.price.toDoubleOrNull() ?: 0.0) < 250 }
                 "Price 250-500" -> productList.filter {
                     val price = it.price.toDoubleOrNull() ?: 0.0
-                    price >= 250 && price <= 500
+                    price in 250.0..500.0
                 }
+
                 "Price > 501" -> productList.filter { (it.price.toDoubleOrNull() ?: 0.0) > 501 }
                 else -> productList
             }
@@ -87,7 +90,10 @@ class ProductListViewModel @Inject constructor(
         viewModelScope.launch {
             val updatedProduct = product.copy(isFavorite = !product.isFavorite)
             repository.updateFavoriteStatus(updatedProduct.id, updatedProduct.isFavorite)
-            Log.d("ProductListViewModel", "Toggled favorite status for product ID: ${updatedProduct.id} to ${updatedProduct.isFavorite}")
+            Log.d(
+                "ProductListViewModel",
+                "Toggled favorite status for product ID: ${updatedProduct.id} to ${updatedProduct.isFavorite}"
+            )
             updateProductInList(updatedProduct)
         }
     }
@@ -103,7 +109,7 @@ class ProductListViewModel @Inject constructor(
         updateFavoriteProducts(updatedList ?: emptyList())
     }
 
-    fun updateFavoriteProducts(products: List<Product>) {
+    private fun updateFavoriteProducts(products: List<Product>) {
         val favoriteList = products.filter { it.isFavorite }
         _favoriteProducts.postValue(favoriteList)
     }

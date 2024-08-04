@@ -67,7 +67,7 @@ dependencies {
     implementation("androidx.recyclerview:recyclerview:1.3.2")
 
     // Coroutines
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.5.1")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.5.2")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.3")
 
     // Hilt
@@ -75,17 +75,18 @@ dependencies {
     kapt("com.google.dagger:hilt-android-compiler:2.48")
 
     // Room
-    val room_version = "2.6.1"
-    implementation("androidx.room:room-runtime:$room_version")
-    implementation("androidx.room:room-ktx:$room_version")
-    kapt("androidx.room:room-compiler:$room_version")
+    val roomVersion = "2.6.1"
+    implementation("androidx.room:room-runtime:$roomVersion")
+    implementation("androidx.room:room-ktx:$roomVersion")
+    ksp("androidx.room:room-compiler:$roomVersion")
 
     // Glide
     implementation("com.github.bumptech.glide:glide:4.14.2")
-    kapt("com.github.bumptech.glide:compiler:4.14.2")
+    ksp("com.github.bumptech.glide:ksp:4.14.2")
+
+
 }
 
-// Room schema export location
 kapt {
     arguments {
         arg("room.schemaLocation", "$projectDir/schemas")

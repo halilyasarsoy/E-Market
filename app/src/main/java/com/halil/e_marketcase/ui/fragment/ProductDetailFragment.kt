@@ -4,16 +4,21 @@ import android.animation.Animator
 import android.animation.AnimatorListenerAdapter
 import android.animation.AnimatorSet
 import android.animation.ObjectAnimator
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.bumptech.glide.Glide
 import com.halil.e_marketcase.R
 import com.halil.e_marketcase.data.CartItem
 import com.halil.e_marketcase.data.Product
 import com.halil.e_marketcase.databinding.FragmentProductDetailBinding
+import com.halil.e_marketcase.other.Resource
 import com.halil.e_marketcase.ui.base.BaseFragment
 import com.halil.e_marketcase.ui.viewmodel.CartViewModel
 import com.halil.e_marketcase.ui.viewmodel.ProductListViewModel
@@ -31,10 +36,20 @@ class ProductDetailFragment :
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         currentProduct = args.product
+        setupToolbar()
         setupUI()
         observeViewModel()
     }
 
+    private fun setupToolbar() {
+        (activity as? AppCompatActivity)?.supportActionBar?.apply {
+            title = currentProduct.name
+            setDisplayHomeAsUpEnabled(true)
+            setDisplayShowHomeEnabled(true)
+        }
+    }
+
+    @SuppressLint("SetTextI18n")
     private fun setupUI() {
         Glide.with(binding.productDetailImage.context)
             .load(currentProduct.image)
@@ -43,7 +58,7 @@ class ProductDetailFragment :
 
         binding.productName.text = currentProduct.name
         binding.productDescription.text = currentProduct.description
-        binding.textViewPrice.text = currentProduct.price
+        binding.textViewPriceValue.text = "${currentProduct.price}$"
         updateFavIcon(currentProduct.isFavorite)
 
         binding.favButtonDetail.setOnClickListener {
@@ -52,6 +67,7 @@ class ProductDetailFragment :
         }
 
         binding.addToCartDetail.setOnClickListener {
+            showProgressBar(true)
             addToCart(currentProduct)
         }
     }
@@ -61,6 +77,25 @@ class ProductDetailFragment :
             products.find { it.id == currentProduct.id }?.let {
                 currentProduct = it
                 updateFavIcon(it.isFavorite)
+            }
+        }
+
+        cartViewModel.addToCartStatus.observe(viewLifecycleOwner) { resource ->
+            when (resource) {
+                is Resource.Loading -> showProgressBar(true)
+                is Resource.Success -> {
+                    showProgressBar(false)
+                    Toast.makeText(requireContext(), "Product added to cart", Toast.LENGTH_SHORT)
+                        .show()
+                    findNavController().popBackStack()
+                }
+
+                is Resource.Error -> {
+                    showProgressBar(false)
+                    Toast.makeText(requireContext(), resource.message, Toast.LENGTH_SHORT).show()
+                }
+
+                is Resource.Completed -> showProgressBar(false)
             }
         }
     }
@@ -74,9 +109,9 @@ class ProductDetailFragment :
 
     private fun updateFavIcon(isFavorite: Boolean) {
         val favIcon = if (isFavorite) {
-            R.drawable.baseline_favorite_24 // Favori ise dolu yıldız ikonu
+            R.drawable.baseline_favorite_24
         } else {
-            R.drawable.baseline_favorite_border_24// Favori değilse boş yıldız ikonu
+            R.drawable.baseline_favorite_border_24
         }
         binding.favButtonDetail.setImageResource(favIcon)
     }
@@ -102,5 +137,9 @@ class ProductDetailFragment :
             }
         })
         animatorSet.start()
+    }
+
+    private fun showProgressBar(show: Boolean) {
+        binding.progressBar.visibility = if (show) View.VISIBLE else View.GONE
     }
 }

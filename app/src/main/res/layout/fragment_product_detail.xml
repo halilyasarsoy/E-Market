@@ -18,7 +18,7 @@
             android:layout_height="200dp"
             android:layout_marginStart="16dp"
             android:layout_marginEnd="16dp"
-            android:contentDescription="Product Image"
+            android:contentDescription="@string/product_image_contentdesc"
             android:scaleType="centerCrop"
             android:src="@drawable/place_holder"
             app:layout_constraintEnd_toEndOf="parent"
@@ -30,7 +30,6 @@
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:layout_margin="8dp"
-            android:contentDescription="Favorite Button"
             app:layout_constraintEnd_toEndOf="@+id/productDetailImage"
             app:layout_constraintTop_toTopOf="@+id/productDetailImage" />
 
@@ -39,7 +38,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
-            android:text="Product Name"
+            android:text="@string/product_name"
             android:textSize="18sp"
             android:textStyle="bold"
             app:layout_constraintTop_toBottomOf="@id/productDetailImage"
@@ -50,7 +49,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            android:text="Product Description"
+            android:text="@string/product_description"
             android:textSize="14sp"
             app:layout_constraintTop_toBottomOf="@id/productName"
             tools:layout_editor_absoluteX="16dp" />
@@ -60,7 +59,7 @@
             android:id="@+id/textViewPrice"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Price: "
+            android:text="@string/price"
             android:textColor="@color/main_blue"
             android:textSize="20sp"
             android:layout_marginTop="20dp"
@@ -71,7 +70,7 @@
             android:id="@+id/textViewPriceValue"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="20dp"
+            android:layout_marginStart="5dp"
             android:text=""
             android:textSize="18sp"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -82,11 +81,20 @@
             style="@style/CustomButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Add To Cart"
+            android:text="@string/add_to_cart"
             app:layout_constraintBottom_toBottomOf="@+id/textViewPriceValue"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@+id/textViewPrice" />
 
 
+        <ProgressBar
+            android:id="@+id/progressBar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>

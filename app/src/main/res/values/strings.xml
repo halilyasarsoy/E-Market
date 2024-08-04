@@ -4,4 +4,12 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="fav_button">Fav</string>
     <string name="product_image">Product\n</string>
+    <string name="there_are_no_fav">There are no products in your favorites.</string>
+    <string name="product_image_contentdesc">Product Image</string>
+    <string name="cart_empty">Cart is empty. Please add products.</string>
+    <string name="price">Price:</string>
+    <string name="complete">Complete</string>
+    <string name="product_name">Product Name</string>
+    <string name="product_description">Product Description</string>
+    <string name="add_to_cart">Add To Cart</string>
 </resources>

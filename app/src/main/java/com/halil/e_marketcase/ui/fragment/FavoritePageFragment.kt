@@ -16,7 +16,8 @@ import com.halil.e_marketcase.ui.viewmodel.ProductListViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class FavoritePageFragment : BaseFragment<FragmentFavoritePageBinding>(FragmentFavoritePageBinding::inflate) {
+class FavoritePageFragment :
+    BaseFragment<FragmentFavoritePageBinding>(FragmentFavoritePageBinding::inflate) {
 
     private lateinit var adapter: ProductFavoriteAdapter
     private val viewModel: ProductListViewModel by viewModels()
@@ -29,7 +30,8 @@ class FavoritePageFragment : BaseFragment<FragmentFavoritePageBinding>(FragmentF
     }
 
     private fun setupRecyclerView() {
-        adapter = ProductFavoriteAdapter(emptyList(), ::onAddToCartClick, ::onFavClick, ::onItemClick)
+        adapter =
+            ProductFavoriteAdapter(emptyList(), ::onAddToCartClick, ::onFavClick, ::onItemClick)
         binding.favoriteRecyclerView.layoutManager = LinearLayoutManager(requireContext())
         binding.favoriteRecyclerView.adapter = adapter
     }
@@ -39,7 +41,18 @@ class FavoritePageFragment : BaseFragment<FragmentFavoritePageBinding>(FragmentF
             products?.let {
                 Log.d("FavoritePageFragment", "Updating adapter with ${it.size} favorite products")
                 adapter.updateProducts(it)
+                updateEmptyView(it.isEmpty())
             }
+        }
+    }
+
+    private fun updateEmptyView(isEmpty: Boolean) {
+        if (isEmpty) {
+            binding.emptyTextView.visibility = View.VISIBLE
+            binding.favoriteRecyclerView.visibility = View.GONE
+        } else {
+            binding.emptyTextView.visibility = View.GONE
+            binding.favoriteRecyclerView.visibility = View.VISIBLE
         }
     }
 
@@ -55,7 +68,8 @@ class FavoritePageFragment : BaseFragment<FragmentFavoritePageBinding>(FragmentF
     }
 
     private fun onItemClick(product: Product) {
-        val action = FavoritePageFragmentDirections.actionFavoritePageFragmentToProductDetailFragment(product)
+        val action =
+            FavoritePageFragmentDirections.actionFavoritePageFragmentToProductDetailFragment(product)
         findNavController().navigate(action)
     }
 }

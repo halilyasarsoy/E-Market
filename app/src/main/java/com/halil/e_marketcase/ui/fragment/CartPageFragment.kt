@@ -35,23 +35,38 @@ class CartPageFragment : BaseFragment<FragmentCartPageBinding>(FragmentCartPageB
     private fun observeViewModel() {
         viewModel.cartItems.observe(viewLifecycleOwner) { cartItems ->
             cartItems?.let {
-                Log.d("CartPageFragment", "Cart items observed: ${it.joinToString { item -> item.name }}")
+                Log.d(
+                    "CartPageFragment",
+                    "Cart items observed: ${it.joinToString { item -> item.name }}"
+                )
                 adapter.updateProducts(it)
-                updateTotalPrice()
+                updateTotalPrice(it.isNotEmpty())
                 updateCartItemCount(it.size)
             }
         }
     }
 
     @SuppressLint("SetTextI18n")
-    private fun updateTotalPrice() {
-        val totalPrice = viewModel.getTotalPrice()
-        binding.totalPriceTextView.text = "$totalPrice"
+    private fun updateTotalPrice(hasItems: Boolean) {
+        if (hasItems) {
+            val totalPrice = viewModel.getTotalPrice()
+            binding.totalPriceTextView.text = "Total: $totalPrice $"
+            binding.totalPriceTextView.visibility = View.VISIBLE
+            binding.textViewPrice.visibility = View.VISIBLE
+            binding.complete.visibility = View.VISIBLE
+            binding.emptyCartMessage.visibility = View.INVISIBLE
+        } else {
+            binding.totalPriceTextView.visibility = View.INVISIBLE
+            binding.textViewPrice.visibility = View.INVISIBLE
+            binding.complete.visibility = View.INVISIBLE
+            binding.emptyCartMessage.visibility = View.VISIBLE
+        }
     }
 
+
     private fun updateCartItemCount(count: Int) {
-        // Update the badge count on the bottom navigation view
-        val bottomNavigationView = requireActivity().findViewById<BottomNavigationView>(R.id.bottomNavigationView)
+        val bottomNavigationView =
+            requireActivity().findViewById<BottomNavigationView>(R.id.bottomNavigationView)
         val badge = bottomNavigationView.getOrCreateBadge(R.id.cartPageFragment)
         badge.number = count
     }
