@@ -2,24 +2,23 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
-        android:id="@+id/nav_home"
+        android:id="@+id/productListFragment"
         android:icon="@drawable/baseline_home_24"
         android:title="List"
         app:showAsAction="always"/>
     <item
-        android:id="@+id/nav_shopping"
+        android:id="@+id/cartPageFragment"
         android:icon="@drawable/baseline_shopping_basket_24"
-        android:title="Detail"
+        android:title="Cart"
         app:showAsAction="always"/>
     <item
-        android:id="@+id/nav_star"
+        android:id="@+id/favoritePageFragment"
         android:icon="@drawable/baseline_star_border_24"
-        android:title="Shopping"
+        android:title="Fav"
         app:showAsAction="always"/>
     <item
         android:id="@+id/nav_person"
         android:icon="@drawable/baseline_person_2_24"
         android:title="Profile"
         app:showAsAction="always"/>
-
 </menu>

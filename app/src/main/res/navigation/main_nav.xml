@@ -7,25 +7,40 @@
 
     <fragment
         android:id="@+id/productListFragment"
-        android:name="com.halil.e_marketcase.ui.ProductListFragment"
+        android:name="com.halil.e_marketcase.ui.fragment.ProductListFragment"
         android:label="fragment_product_list"
         tools:layout="@layout/fragment_product_list" >
         <action
             android:id="@+id/action_productListFragment_to_productDetailFragment"
             app:destination="@id/productDetailFragment" />
-    </fragment>
-    <fragment
-        android:id="@+id/productDetailFragment"
-        android:name="com.halil.e_marketcase.ui.ProductDetailFragment"
-        android:label="fragment_product_detail"
-        tools:layout="@layout/fragment_product_detail" >
         <action
-            android:id="@+id/action_productDetailFragment_to_cartPageFragment"
+            android:id="@+id/action_productListFragment_to_cartPageFragment"
             app:destination="@id/cartPageFragment" />
     </fragment>
     <fragment
+        android:id="@+id/productDetailFragment"
+        android:name="com.halil.e_marketcase.ui.fragment.ProductDetailFragment"
+        android:label="fragment_product_detail"
+        tools:layout="@layout/fragment_product_detail" >
+        <argument
+            android:name="product"
+            app:argType="com.halil.e_marketcase.data.Product"
+            app:nullable="false" />
+    </fragment>
+    <fragment
         android:id="@+id/cartPageFragment"
-        android:name="com.halil.e_marketcase.ui.CartPageFragment"
+        android:name="com.halil.e_marketcase.ui.fragment.CartPageFragment"
         android:label="fragment_cart_page"
         tools:layout="@layout/fragment_cart_page" />
+    <fragment
+        android:id="@+id/favoritePageFragment"
+        android:name="com.halil.e_marketcase.ui.fragment.FavoritePageFragment"
+        android:label="FavoritePageFragment" >
+        <action
+            android:id="@+id/action_favoritePageFragment_to_productDetailFragment"
+            app:destination="@id/productDetailFragment" />
+        <action
+            android:id="@+id/action_favoritePageFragment_to_cartPageFragment"
+            app:destination="@id/cartPageFragment" />
+    </fragment>
 </navigation>
