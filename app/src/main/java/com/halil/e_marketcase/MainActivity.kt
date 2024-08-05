@@ -60,12 +60,15 @@ class MainActivity : AppCompatActivity() {
             val isRootDest = destination.id == startDestinationId
             supportActionBar?.setDisplayHomeAsUpEnabled(!isRootDest)
             supportActionBar?.setDisplayShowHomeEnabled(!isRootDest)
+            if (!isRootDest) {
+                supportActionBar?.setHomeAsUpIndicator(R.drawable.baseline_arrow_back_ios_24)
+            }
         }
     }
 
     private fun observeCartItems() {
-        cartViewModel.cartItems.observe(this) { cartItems ->
-            updateCartItemCount(cartItems.size)
+        cartViewModel.totalItemCount.observe(this) { itemCount ->
+            updateCartItemCount(itemCount)
         }
     }
 
@@ -75,6 +78,7 @@ class MainActivity : AppCompatActivity() {
         badge.isVisible = count > 0
         badge.number = count
     }
+
     private fun handleOnBackPressed() {
         onBackPressedDispatcher.addCallback(this) {
             if (!navController.popBackStack()) {
@@ -83,3 +87,4 @@ class MainActivity : AppCompatActivity() {
         }
     }
 }
+

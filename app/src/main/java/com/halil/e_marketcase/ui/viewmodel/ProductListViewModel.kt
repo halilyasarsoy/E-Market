@@ -17,13 +17,13 @@ class ProductListViewModel @Inject constructor(
 ) : ViewModel() {
 
     private val _allProducts = MutableLiveData<List<Product>>()
-    val allProducts: LiveData<List<Product>> = _allProducts
+    val allProducts: LiveData<List<Product>> get() = _allProducts
 
     private val _filteredProducts = MutableLiveData<List<Product>>()
-    val filteredProducts: LiveData<List<Product>> = _filteredProducts
+    val filteredProducts: LiveData<List<Product>> get() = _filteredProducts
 
     private val _favoriteProducts = MutableLiveData<List<Product>>()
-    val favoriteProducts: LiveData<List<Product>> = _favoriteProducts
+    val favoriteProducts: LiveData<List<Product>> get() = _favoriteProducts
 
     private var _lastFilterQuery: String? = null
 

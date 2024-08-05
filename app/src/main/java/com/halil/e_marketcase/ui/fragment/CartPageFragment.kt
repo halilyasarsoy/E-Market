@@ -8,9 +8,9 @@ import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.halil.e_marketcase.R
-import com.halil.e_marketcase.ui.adapter.CartAdapter
 import com.halil.e_marketcase.data.CartItem
 import com.halil.e_marketcase.databinding.FragmentCartPageBinding
+import com.halil.e_marketcase.ui.adapter.CartAdapter
 import com.halil.e_marketcase.ui.base.BaseFragment
 import com.halil.e_marketcase.ui.viewmodel.CartViewModel
 import dagger.hilt.android.AndroidEntryPoint
@@ -41,8 +41,11 @@ class CartPageFragment : BaseFragment<FragmentCartPageBinding>(FragmentCartPageB
                 )
                 adapter.updateProducts(it)
                 updateTotalPrice(it.isNotEmpty())
-                updateCartItemCount(it.size)
             }
+        }
+
+        viewModel.totalItemCount.observe(viewLifecycleOwner) { itemCount ->
+            updateCartItemCount(itemCount)
         }
     }
 
@@ -63,11 +66,11 @@ class CartPageFragment : BaseFragment<FragmentCartPageBinding>(FragmentCartPageB
         }
     }
 
-
     private fun updateCartItemCount(count: Int) {
         val bottomNavigationView =
             requireActivity().findViewById<BottomNavigationView>(R.id.bottomNavigationView)
         val badge = bottomNavigationView.getOrCreateBadge(R.id.cartPageFragment)
+        badge.isVisible = count > 0
         badge.number = count
     }
 

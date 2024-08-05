@@ -3,6 +3,7 @@ package com.halil.e_marketcase.ui.viewmodel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.switchMap
 import androidx.lifecycle.viewModelScope
 import com.halil.e_marketcase.data.CartItem
 import com.halil.e_marketcase.main.ProductRepository
@@ -17,6 +18,10 @@ class CartViewModel @Inject constructor(private val repository: ProductRepositor
     val cartItems: LiveData<List<CartItem>> = repository.allCartItems
     private val _addToCartStatus = MutableLiveData<Resource<Unit>>()
     val addToCartStatus: LiveData<Resource<Unit>> = _addToCartStatus
+
+    val totalItemCount: LiveData<Int> = cartItems.switchMap { items ->
+        MutableLiveData(items.sumOf { it.quantity })
+    }
 
     fun addToCart(cartItem: CartItem) {
         viewModelScope.launch {
