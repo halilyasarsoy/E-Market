@@ -1,7 +1,7 @@
 # E-Market
 
 This project was carried out as a study of basic features for e-commerce platforms. Functions such as product listing, adding to cart and adding to favorites were worked on. 
-Basic requirements in terms of user experience and functionality were taken into consideration.## Ekran Görüntüleri
+Basic requirements in terms of user experience and functionality were taken into consideration.
 
 
 ## Technical Features
